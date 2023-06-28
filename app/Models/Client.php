@@ -18,4 +18,8 @@ class Client extends Model
         'website',
         
     ];
+
+    public function projects(){
+        return $this->hasMany(Project::class);
+    }
 }

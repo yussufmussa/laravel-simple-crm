@@ -17,7 +17,12 @@ class ClientFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'company' => fake()->text(6),
+            'address' => fake()->address(),
+            'email' => fake()->safeEmail(),
+            'phone_number' => fake()->phoneNumber(),
+            'vat' => fake()->numberBetween(10,99),
+            'website' => fake()->url()
         ];
     }
 }

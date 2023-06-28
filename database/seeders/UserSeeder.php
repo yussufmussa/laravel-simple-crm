@@ -26,10 +26,26 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
 
-            $defaultProfilePicturePath = public_path('images/default-profile-picture.png');
-            if (file_exists($defaultProfilePicturePath)) {
-                $user->addMedia($defaultProfilePicturePath)
-                    ->toMediaCollection('profile_pictures');
-            }
+        $user =  User::create([
+            'name' => 'yussuf mussa',
+            'email' => 'staff1@gmail.com',
+            'password' => Hash::make('root'),
+            'role_id' => 3,
+            'email_verified_at' => now(),
+        ]);
+
+        $user =  User::create([
+            'name' => 'yussuf mussa',
+            'email' => 'staff2@gmail.com',
+            'password' => Hash::make('root'),
+            'role_id' => 3,
+            'email_verified_at' => now(),
+        ]);
+
+            // $defaultProfilePicturePath = public_path('images/default-profile-picture.png');
+            // if (file_exists($defaultProfilePicturePath)) {
+            //     $user->addMedia($defaultProfilePicturePath)
+            //         ->toMediaCollection('profile_pictures');
+            // }
     }
 }
