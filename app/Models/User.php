@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -12,7 +13,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
+    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -50,7 +51,12 @@ class User extends Authenticatable implements HasMedia
         return match((int)$this->role_id){
             1 => 'admin.dashboard',
             2 => 'manager.dashboard',
-            3 => 'client.dashbaord',
+            3 => 'staff.dashboard',
+            4 => 'client.dashbaord',
         };
+    }
+
+    public function role(){
+        return $this->belongsTo(Role::class);
     }
 }
