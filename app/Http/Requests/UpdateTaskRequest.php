@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProjectRequest extends FormRequest
+class UpdateTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,25 +22,23 @@ class StoreProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required',
-            'description' => 'required',
-            'starting_date' => 'required',
-            'deadline' => 'required|date',
-            'user_id' => 'required|array',
-            'client_id' => 'required|exists:clients,id',
+            'subject' => 'required',
+            'starting_date' => 'date|required',
+            'due_date' => 'date|required|after:starting_date',
             'status' => 'required',
-            'fixed_rate' => 'nullable',
-            'hourly_rate' => 'nullable',
+            'priority' => 'required',
+            'description' => 'nullable',
+            'project_id' => 'required',
+            'user_id' => 'required',
         ];
-
-        
     }
 
     public function messages(): array
-        {
-            return [
-                'client_id' => 'Select Member to assign'
-            ];
+    {
+        return [
+            'project_id' => 'Select Project',
+            'user_id' => 'Select Staff to Assign',
 
-        }
+        ];
+    }
 }

@@ -28,7 +28,7 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         
-        $project = Project::create($request->all());
+        $project = Project::create($request->validated());
         $project->users()->sync($request->input('user_id', []));
 
         return redirect()->route('admin.projects.index')->with('message', 'Project created successfully.');

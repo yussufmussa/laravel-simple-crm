@@ -59,4 +59,8 @@ class User extends Authenticatable implements HasMedia
     public function role(){
         return $this->belongsTo(Role::class);
     }
+
+    public function tasks(){
+        return $this->hasMany(Task::class);
+    }
 }

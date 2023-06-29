@@ -24,10 +24,21 @@ class UpdateProjectRequest extends FormRequest
         return [
             'title' => 'required',
             'description' => 'nullable',
+            'starting_date' => 'required',
             'deadline' => 'nullable|date',
             'user_id' => 'nullable|array',
             'client_id' => 'required|exists:clients,id',
             'status' => 'nullable',
+            'fixed_rate' => 'nullable',
+            'hourly_rate' => 'nullable',
         ];
     }
+
+    public function messages(): array
+        {
+            return [
+                'client_id' => 'Select Member to assign'
+            ];
+
+        }
 }

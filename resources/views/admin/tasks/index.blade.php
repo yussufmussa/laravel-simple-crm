@@ -2,7 +2,7 @@
 @section('extra_style')
 <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
 @endsection
-@section('title', 'Projects')
+@section('title', 'Tasks')
 @section('contents')
 
 <!-- Content Header (Page header) -->
@@ -15,7 +15,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Project</li>
+                    <li class="breadcrumb-item active">Task</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -32,9 +32,9 @@
         @endif
         <div class="card card-default">
             <div class="card-header">
-                <h3 class="card-title">Project List</h3>
+                <h3 class="card-title">Task List</h3>
                 <div class="card-tools">
-                    <a href="{{route('admin.projects.create')}}" class="btn btn-primary">Add Project</a>
+                    <a href="{{route('admin.tasks.create')}}" class="btn btn-primary">Add Task</a>
                 </div>
             </div>
             <!-- /.card-header -->
@@ -43,40 +43,34 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Title</th>
-                            <th>Deadline</th>
-                            <th>Client</th>
-                            <th>Billing</th>
-                            <th>Members</th>
+                            <th>Name</th>
                             <th>Status</th>
+                            <th>Starting Date</th>
+                            <th>Due Date</th>
+                            <th>Assigned To</th>
+                            <th>Priority</th>
                             <th>Actions</th>
                         </tr>
                     <tbody>
-                        @foreach ($projects as $key => $project)
+                        @foreach ($tasks as $key => $task)
                         <tr>
                             <th>{{$key + 1}}</th>
-                            <td>{{ $project->title }}</td>
-                            <td>{{ $project->deadline}}</td>
-                            <td>{{ $project->client->company }}</td>
-                            <td>{{ ($project->fixed_rate) ? $project->fixed_rate : $project->hourly_rate }}</td>
+                            <td>{{ $task->subject }}</td>
+                            <td><span class="badge {{ $task->status === 'completed' ? 'badge-success' : ($task->status === 'pending' ? 'badge-warning' : 'badge-info') }}">{{ $task->status }}</span></td>
+                            <td>{{ $task->starting_date}}</td>
+                            <td>{{ $task->due_date}}</td>
+                            <td>{{ $task->user->name}}</td>
+                            <td><span class="badge {{ $task->priority === 'high' ? 'badge-danger' : ($task->priority  === 'medium' ?  'badge-warning' : 'badge-info') }}">{{ $task->priority }}</span></td>
                             <td>
-                                @foreach($project->users as $staff)
-                                {{ $staff->name }},
-                                @endforeach
-                            </td>
-
-                            <td>{{ $project->status }}</td>
-
-                            <td>
-                                <a href="{{route('admin.projects.edit', $project->id)}}"><i class="fa fa-pen-alt"></i></a>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#category{{$project->id}}">
+                                <a href="{{route('admin.tasks.edit', $task->id)}}"><i class="fa fa-pen-alt"></i></a>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#category{{$task->id}}">
                                     <i class="fa fa-trash"></i>
                                 </button>
 
                                 <!--  -->
-                                <div class="modal fade" id="category{{$project->id}}">
+                                <div class="modal fade" id="category{{$task->id}}">
                                     <div class="modal-dialog">
-                                        <form action="{{route('admin.projects.destroy', $project->id)}}" method="post">@csrf
+                                        <form action="{{route('admin.tasks.destroy', $task->id)}}" method="post">@csrf
                                             {{method_field('DELETE')}}
                                             <div class="modal-content">
                                                 <div class="modal-header">

@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class Project extends Model
 {
     use HasFactory;
-    protected $fillable = ['title','description', 'status', 'deadline','client_id'];
+    protected $fillable = ['title','description', 'status', 'deadline','client_id', 'starting_date', 'hourly_rate', 'fixed_rate'];
 
     public function users(){
         return $this->belongsToMany(User::class);
@@ -17,6 +17,10 @@ class Project extends Model
 
     public function client(){
         return $this->belongsTo(Client::class);
+    }
+
+    public function tasks(){
+        return $this->hasMany(Task::class);
     }
 
     

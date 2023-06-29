@@ -16,7 +16,10 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('status');
+            $table->date('starting_date');
             $table->date('deadline');
+            $table->string('fixed_rate')->nullable();
+            $table->string('hourly_rate')->nullable();
             $table->foreignId('client_id');
             $table->timestamps();
         });

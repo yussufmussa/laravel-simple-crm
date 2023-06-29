@@ -47,21 +47,22 @@
                             </div>
                         </div>
 
-                        <div class="col-md-12">
+                    </div>
+
+                    <div class="row">
+                     <div class="col-md-4">
                             <div class="form-group">
-                                <label for="description">Description</label>
-                                <textarea name="description" class="@error('description') is-invalid @enderror form-control" cols="5" rows="5">{{ old('description') }} </textarea>
-                                @error('description')
+                                <label for="deadline">Starting Date <span class="text-danger">*</span></label>
+                                <input type="date" name="starting_date" class="@error('starting_date') is-invalid @enderror form-control" value="{{ old('starting_date') }}">
+                                @error('starting_date')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="deadline">Deadline</label>
+                                <label for="deadline">Deadline <span class="text-danger">*</span></label>
                                 <input type="date" name="deadline" class="@error('deadline') is-invalid @enderror form-control" value="{{ old('deadline') }}">
                                 @error('deadline')
                                     <div class="text-danger">{{ $message }}</div>
@@ -69,9 +70,9 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="user_id">Staff(s)</label>
+                                <label for="user_id">Staff(s) <span class="text-danger">*</span></label>
                                 <div class="select2-purple">
                                 <select name="user_id[]" class="@error('user_id') is-invalid @enderror select2" multiple="multiple" data-placeholder="Select Staff(s)" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                     @foreach ($users as $user)
@@ -91,7 +92,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="client_id">Client</label>
+                                <label for="client_id">Client <span class="text-danger">*</span></label>
                                 <select name="client_id" class="form-control @error('client_id') is-invalid @enderror" style="width: 100%;">
                                 <option value="">--Select Client --</option>
                                     @foreach ($clients as $client)
@@ -106,7 +107,7 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="status">Status</label>
+                                <label for="status">Status <span class="text-danger">*</span></label>
                                 <select name="status" class="@error('status') is-invalid @enderror form-control">
                                     <option value="">--Select Status --</option>
                                     <option value="pending">Pending</option>
@@ -114,6 +115,54 @@
                                     <option value="completed">Completed</option>
                                 </select>
                                 @error('status')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="title">Billing Type <span class="text-danger">*</span><span class="text-danger">*</span></label>
+                                <select name="billing_type" id="billing_type" class="@error('billing_type') is-invalid @enderror form-control">
+                                    <option value="">--Select Billing Type --</option>
+                                    <option value="1">Fixed Rate</option>
+                                    <option value="2">Hourly Rate</option>
+                                </select>
+                                @error('billing_type')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group" id="ratePerHour">
+                                <label for="hourly_rate">Rate Per Hour</label>
+                                <input name="hourly_rate" class="@error('hourly_rate') is-invalid @enderror form-control" value="{{old('hourly_rate')}}">
+                                @error('hourly_rate')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group" id="fixedRate">
+                                <label for="fixedRate">Total Cost</label>
+                                <input name="fixed_rate" class="@error('fixed_rate') is-invalid @enderror form-control" value="{{old('fixed_rate')}}">
+                                @error('fixed_rate')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="row">
+                    <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="description">Project Description <span class="text-danger">*</span></label>
+                                <textarea name="description" class="@error('description') is-invalid @enderror form-control" cols="5" rows="5">{{ old('description') }} </textarea>
+                                @error('description')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -135,6 +184,22 @@
     $(function () {
         $('.select2').select2()
         $('.select2Client').select2()
+        $('#ratePerHour').hide();
+        $('#fixedRate').hide();
+
+
+        $('#billing_type').on('change', function() {
+            let billing_type = $(this).val();
+            console.log(billing_type)
+            if(billing_type == 1){
+                 $('#fixedRate').show();
+            }else if(billing_type == 2){
+                $('#ratePerHour').show();
+            }else{
+
+            }
+
+        });
 
     });
 </script>

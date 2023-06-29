@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('project_user', function (Blueprint $table) {
-            $table->foreignId('project_id');
-            $table->foreignId('user_id');
+            $table->foreignId('project_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
+    
 
     /**
      * Reverse the migrations.
